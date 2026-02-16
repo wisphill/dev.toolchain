@@ -6,7 +6,4 @@ services:
       context: ./docker/go-builder
     image: dev-toolchain/go-builder:1.0
     container_name: go-builder
-    volumes:
-      - ../:/workspace
-    working_dir: /workspace
     tty: true
