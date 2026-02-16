@@ -4,6 +4,6 @@ services:
   go-builder:
     build:
       context: ./docker/go-builder
-    image: dev-toolchain/go-builder:1.0
+    image: dev-toolchain/go-builder:1.1
     container_name: go-builder
     tty: true
