@@ -20,3 +20,13 @@ services:
     volumes:
       - "./volume:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+  coredns:
+    build:
+      context: ./docker/coredns
+      dockerfile: Dockerfile
+    container_name: coredns
+    ports:
+      - "${COLIMA_IP}:53:53/udp"
+      - "${COLIMA_IP}:53:53/tcp"
+    volumes:
+      - ./docker/coredns/Corefile:/etc/coredns/Corefile

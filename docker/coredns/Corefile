@@ -1,0 +1,9 @@
+.:53 {
+    forward . 8.8.8.8 8.8.4.4
+    log
+    errors
+    # Example: Pointing a custom local domain to LocalStack
+    template ANY ANY localstack.dev {
+        answer "{{ .Name }} 60 IN A 127.0.0.1"
+    }
+}
