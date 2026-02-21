@@ -30,3 +30,31 @@ services:
       - "${COLIMA_IP}:53:53/tcp"
     volumes:
       - ./docker/coredns/Corefile:/etc/coredns/Corefile
+  jenkins:
+    build:
+      context: ./docker/jenkins
+      dockerfile: Dockerfile
+    container_name: jenkins-runner
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 2048m
+    mem_reservation: 1024m
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true
